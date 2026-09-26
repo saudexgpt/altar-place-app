@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Altar Place</string>
+    <string name="title_activity_main">Altar Place</string>
+    <string name="package_name">com.saudexgpt.altarplace</string>
+    <string name="custom_url_scheme">com.saudexgpt.altarplace</string>
+</resources>
