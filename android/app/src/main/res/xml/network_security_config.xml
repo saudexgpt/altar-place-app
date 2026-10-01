@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  No cleartext domain exceptions — production (altarplace.com) is HTTPS.
+  The previous version permitted plaintext HTTP to a developer's LAN IP for
+  local testing; that has no place in a release build; re-add a dev-only
+  domain-config here (or override capacitor.config.ts) if you need to test
+  against a local non-TLS backend again.
+-->
 <network-security-config>
-    <domain-config cleartextTrafficPermitted="true">
-        <!-- Replace with your actual computer IP -->
-        <domain includeSubdomains="true">192.168.100.2</domain>
-    </domain-config>
+    <base-config cleartextTrafficPermitted="false" />
 </network-security-config>

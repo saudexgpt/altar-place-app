@@ -4,10 +4,11 @@ const config: CapacitorConfig = {
   appId: 'com.saudexgpt.altarplace',
   appName: 'Altar Place',
   webDir: 'dist',
-  server: {
-    androidScheme: 'http', // 👈 Change this from 'https' to 'http'
-    cleartext: true        // 👈 Ensure cleartext traffic is enabled
-  },
+  // No `server` override: Capacitor's defaults (https scheme, cleartext
+  // off) are what production needs, since the real API is HTTPS. The
+  // previous http/cleartext override was a local-dev workaround for testing
+  // against a LAN IP with no TLS cert — shipping it to the Play Store would
+  // mean the app accepts plaintext HTTP to any domain.
   plugins: {
     SplashScreen: {
       launchAutoHide: false,
