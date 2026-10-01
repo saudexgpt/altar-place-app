@@ -32,6 +32,22 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:scheme="file" android:mimeType="audio/*" />
             </intent-filter>
+
+            <!-- App Links: lets the system browser hand control back to this
+                 app after Google/Facebook OAuth, instead of just showing the
+                 web page at that URL. socialAuth.ts sends the user to
+                 https://altarplace.com/oauth-callback?token=... after login;
+                 autoVerify requires a matching
+                 https://altarplace.com/.well-known/assetlinks.json (see
+                 public/.well-known/assetlinks.json in backend-laravel) that
+                 lists this app's signing certificate fingerprint, or Android
+                 silently falls back to opening the URL in the browser. -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" android:host="altarplace.com" android:pathPrefix="/oauth-callback" />
+            </intent-filter>
         </activity>
 
         <provider
