@@ -11,19 +11,11 @@
       </span>
       {{ loadingProvider === 'google' ? 'Redirecting…' : 'Continue with Google' }}
     </button>
-
-    <button type="button" class="social-btn social-btn--facebook" :disabled="loadingProvider !== null" @click="handleClick('facebook')">
-      <span class="social-btn-icon">
-        <ion-icon :icon="logoFacebook" />
-      </span>
-      {{ loadingProvider === 'facebook' ? 'Redirecting…' : 'Continue with Facebook' }}
-    </button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { IonIcon, toastController } from '@ionic/vue';
-import { logoFacebook } from 'ionicons/icons';
+import { toastController } from '@ionic/vue';
 import { ref } from 'vue';
 import { startSocialLogin, type SocialProvider } from '@/services/socialAuth';
 
@@ -86,10 +78,6 @@ async function handleClick(provider: SocialProvider) {
   background: var(--app-color-google);
 }
 
-.social-btn--facebook {
-  background: var(--app-color-facebook);
-}
-
 .social-btn-icon {
   width: 22px;
   height: 22px;
@@ -98,10 +86,5 @@ async function handleClick(provider: SocialProvider) {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.social-btn--facebook .social-btn-icon ion-icon {
-  color: var(--app-color-facebook);
-  font-size: 15px;
 }
 </style>
