@@ -64,10 +64,12 @@ export const adsApi = {
     return unwrap((await api.get('/advertiser/campaigns')).data);
   },
 
+  // No explicit Content-Type on either of these: the client must compute
+  // its own (with the multipart boundary) for a FormData body. Setting one
+  // overrides that with a boundary-less header, which makes PHP unable to
+  // parse any field or file out of the request at all.
   async createCampaign(payload: CampaignPayload): Promise<Advertisement> {
-    const { data } = await api.post('/advertiser/campaigns', buildCampaignFormData(payload), {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
+    const { data } = await api.post('/advertiser/campaigns', buildCampaignFormData(payload));
     return data.advertisement;
   },
 
@@ -75,9 +77,7 @@ export const adsApi = {
     const form = buildCampaignFormData(payload);
     form.append('_method', 'PUT');
 
-    const { data } = await api.post(`/advertiser/campaigns/${id}`, form, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
+    const { data } = await api.post(`/advertiser/campaigns/${id}`, form);
     return data.advertisement;
   },
 

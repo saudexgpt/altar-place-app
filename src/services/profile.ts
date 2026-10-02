@@ -21,9 +21,11 @@ export const profileApi = {
   async uploadAvatar(file: File | Blob): Promise<AuthUser> {
     const form = new FormData();
     form.append('avatar', file);
-    return unwrap((await api.post('/profile/avatar', form, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    })).data);
+    // No explicit Content-Type: the client must compute its own (with the
+    // multipart boundary) for a FormData body. Setting one overrides that
+    // with a boundary-less header, which makes PHP unable to parse any
+    // field or file out of the request at all.
+    return unwrap((await api.post('/profile/avatar', form)).data);
   },
   async updateNotificationPreferences(payload: Record<string, boolean>): Promise<AuthUser> {
     return unwrap((await api.put('/profile/notification-preferences', payload)).data);

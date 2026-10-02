@@ -59,19 +59,19 @@ export const creatorApi = {
     return unwrap((await api.get('/creator/tracks')).data);
   },
 
+  // No explicit Content-Type on either of these: the client must compute
+  // its own (with the multipart boundary) for a FormData body. Setting one
+  // overrides that with a boundary-less header, which makes PHP unable to
+  // parse any field or file out of the request at all.
   async uploadTrack(payload: UploadTrackPayload): Promise<Track> {
-    return unwrap((await api.post('/creator/tracks', buildTrackFormData(payload), {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    })).data);
+    return unwrap((await api.post('/creator/tracks', buildTrackFormData(payload))).data);
   },
 
   async updateTrack(id: number, payload: Partial<UploadTrackPayload>): Promise<Track> {
     const form = buildTrackFormData(payload);
     form.append('_method', 'PUT');
 
-    return unwrap((await api.post(`/creator/tracks/${id}`, form, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    })).data);
+    return unwrap((await api.post(`/creator/tracks/${id}`, form)).data);
   },
 
   async deleteTrack(id: number): Promise<void> {
